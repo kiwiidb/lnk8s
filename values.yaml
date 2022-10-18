@@ -30,3 +30,22 @@ lnd-1:
     limits:
       memory: 2Gi
       cpu: 1000m
+cln-1:
+  image:
+    tag: 0.12.3
+  args:
+    - '--disable-plugin=bcli'
+    - '--log-level=debug'
+    - '--addr=0.0.0.0:9735'
+    - '--plugin=/opt/lightningd/plugins/trustedcoin'
+    - '--grpc-port=9737'
+    - '--experimental-offers'
+  ingress:
+    enabled: false
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 512Mi
+      cpu: 200m
