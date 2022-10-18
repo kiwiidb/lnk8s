@@ -1,0 +1,29 @@
+lnd-1:
+  configurationFile:
+    lnd.conf: |-
+      bitcoin.active=1
+      bitcoin.mainnet=1
+      bitcoin.testnet=0
+      debuglevel=info
+      bitcoin.node=neutrino
+      rpclisten=0.0.0.0:10009
+      tlsextraip=0.0.0.0
+      neutrino.addpeer=btcd-mainnet.lightning.computer
+      neutrino.addpeer=mainnet1-btcd.zaphq.io
+      neutrino.addpeer=mainnet2-btcd.zaphq.io
+      neutrino.addpeer=mainnet3-btcd.zaphq.io
+      neutrino.addpeer=mainnet4-btcd.zaphq.io
+      neutrino.feeurl=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json
+      protocol.wumbo-channels=1
+      prometheus.enable=false
+      prometheus.listen=0.0.0.0:8989
+#    wallet-unlock-password-file=/passwords/wallet_password
+  autoUnlock: false
+  autoUnlockPassword: password
+  resources:
+    requests:
+      memory: 300Mi
+      cpu: 800m
+    limits:
+      memory: 2Gi
+      cpu: 1000m

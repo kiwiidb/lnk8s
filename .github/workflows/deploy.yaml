@@ -1,0 +1,30 @@
+name: Deploy the bolt.fun platform
+on:
+  push:
+    branches:
+      - main
+jobs:
+    build:
+        env:
+          CLUSTER_NAME: bolt-fun-demo
+          CHART_NAME: .
+          RELEASE_NAME: bolt-fun-demo
+          NAMESPACE: default
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: Save DigitalOcean kubeconfig
+              uses: digitalocean/action-doctl@master
+              env:
+                DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_ACCESS_TOKEN }}
+              with:
+                args: kubernetes cluster kubeconfig show $CLUSTER_NAME > $GITHUB_WORKSPACE/.kubeconfig
+            - name: Helm install Bolt.fun stack
+              uses: stefanprodan/kube-tools@v1
+              with:
+                kubectl: 1.17.0
+                helmv3: 3.2.1
+                command: |
+                  helmv3 repo add flitz https://flitz-be.github.io/helm-charts
+                  helmv3 dep update ./$CHART_NAME
+                  helmv3 upgrade --install --namespace $NAMESPACE --create-namespace --kubeconfig $GITHUB_WORKSPACE/.kubeconfig $RELEASE_NAME $CHART_NAME
