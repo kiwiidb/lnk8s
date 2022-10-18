@@ -1,4 +1,6 @@
 lnd-1:
+  rtl:
+    enable: false
   configurationFile:
     lnd.conf: |-
       bitcoin.active=1
