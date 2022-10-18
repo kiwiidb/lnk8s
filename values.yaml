@@ -4,6 +4,7 @@ lnd-1:
   configurationFile:
     lnd.conf: |-
       bitcoin.active=1
+      alias=bolt.fun.k8s.demo
       bitcoin.mainnet=1
       bitcoin.testnet=0
       debuglevel=info
@@ -19,9 +20,9 @@ lnd-1:
       protocol.wumbo-channels=1
       prometheus.enable=false
       prometheus.listen=0.0.0.0:8989
-#    wallet-unlock-password-file=/passwords/wallet_password
-  autoUnlock: false
-  autoUnlockPassword: password
+      wallet-unlock-password-file=/passwords/wallet_password
+  autoUnlock: true
+  autoUnlockPassword: boltfunbtc
   resources:
     requests:
       memory: 300Mi
